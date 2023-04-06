@@ -1,9 +1,9 @@
 {
-  "name": "lit-ram-mediathek",
-  "version": "1.0.0",
-  "description": "RA-MICRO Mediathek as Web Component created with Lit",
+  "name": "sticky-card",
+  "version": "0.0.1",
+  "description": "Pretty card with sticky image as Web Component created with Lit",
   "main": "index.js",
-  "author": "AD",
+  "author": "Andrej Daiker",
   "license": "MIT",
   "scripts": {
     "dev": "vite --open",
@@ -17,5 +17,8 @@
     "@types/node": "^18.15.11",
     "typescript": "^5.0.3",
     "vite": "^4.2.1"
+  },
+  "peerDependencies": {
+    "lit": "^2.7.1"
   }
 }

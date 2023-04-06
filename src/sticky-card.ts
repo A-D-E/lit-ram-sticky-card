@@ -44,11 +44,12 @@ export class StickyCard extends LitElement {
             grid-template-columns: [full-start] minmax(2rem,1fr) [standard-start] 3.75rem [narrow-start] minmax(1rem,67.5rem) [narrow-end] 3.75rem [standard-end] minmax(2rem,1fr) [full-end];
             margin-block: 6rem;
         }
-         .${unsafeCSS(casyPrefix)}-image-on-right .${unsafeCSS(casyPrefix)}-image-container {
-            grid-column: 2;
+      
+        .casy-image-right {
+            grid-column: 2 !important;
         }
-        .${unsafeCSS(casyPrefix)}-image-on-right .${unsafeCSS(casyPrefix)}-sticky-item {
-            grid-column: 1;
+        .casy-text-left {
+            grid-column: 1 !important;
         }
         .${unsafeCSS(casyPrefix)}-main-container{
             line-height: 1.5;
@@ -115,21 +116,26 @@ export class StickyCard extends LitElement {
     render() {
         // add unique id to the css classes to avoid conflicts with other styles (CArd-StickY)
         const casyPrefix = `casy-${this.uniqueId}`
-
+        const gridRowFix = (num: number) => {
+            return this.imageRight ? `grid-row: ${num + 1}` : `grid-row: auto`
+        }
         // use the styles from the static get styles() method
         return html`
             <style>
             ${this.getStyles()}
             </style>
-            <div class="${casyPrefix}-section-wrap ${this.imageRight ? '${casyPrefix}-image-on-right': ''}">
+            <div class="${casyPrefix}-section-wrap ">
                 <div class="${casyPrefix}-main-container">
-                <div class="${casyPrefix}-image-container">
+                <div class="${casyPrefix}-image-container ${this.imageRight ? 'casy-image-right' : ''}">
                     <img class="${casyPrefix}-image" src="${this.imageSrc}" alt="${this.imageAlt}" />
                 </div>
                     ${this.textItems.map(
-                    (item: { title: String, text: String }) =>
+                    (item: { title: String, text: String }, i) =>
                         html`
-                        <div class="${casyPrefix}-sticky-item">
+                        <div 
+                        class="${casyPrefix}-sticky-item ${this.imageRight ? 'casy-text-left' : ''}" 
+                        style="grid-row: initial; ${gridRowFix(i)}"
+                        >
                             <h2>${item.title}</h2>
                             <p>${item.text}</p>
                         </div>
