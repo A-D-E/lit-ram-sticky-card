@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit"
+import { LitElement, html, css, unsafeCSS } from "lit"
 import { customElement, property } from "lit/decorators.js"
 
 // make jquery & foundation available in the window object
@@ -19,14 +19,21 @@ export class StickyCard extends LitElement {
     @property({ type: String, attribute: 'image-alt'}) imageAlt = ""
     @property({ type: Array, attribute: 'text-items'}) textItems = []
     @property({ type: Boolean, attribute: 'use-light-dom' }) useLightDom = false
+    @property({ type: String }) uniqueId = ""
 
+     // add constructor with super() to avoid error
 
-    static get styles() {
+     constructor() {
+        super()
+        this.uniqueId = Math.random().toString(36).substr(2, 9)
+    }
+
+    getStyles() {
 
         // "casy-" prefix is used to avoid conflicts with other styles (CArd-StickY)
-
+        const casyPrefix = `casy-${this.uniqueId}`
         return css`
-        .casy-section-wrap {
+        .${unsafeCSS(casyPrefix)}-section-wrap {
             line-height: 1.5;
             box-sizing: border-box;
             margin: 0;
@@ -37,13 +44,13 @@ export class StickyCard extends LitElement {
             grid-template-columns: [full-start] minmax(2rem,1fr) [standard-start] 3.75rem [narrow-start] minmax(1rem,67.5rem) [narrow-end] 3.75rem [standard-end] minmax(2rem,1fr) [full-end];
             margin-block: 6rem;
         }
-         .casy-image-on-right .casy-image-container {
+         .${unsafeCSS(casyPrefix)}-image-on-right .${unsafeCSS(casyPrefix)}-image-container {
             grid-column: 2;
         }
-        .casy-image-on-right .casy-sticky-item {
+        .${unsafeCSS(casyPrefix)}-image-on-right .${unsafeCSS(casyPrefix)}-sticky-item {
             grid-column: 1;
         }
-        .casy-main-container{
+        .${unsafeCSS(casyPrefix)}-main-container{
             line-height: 1.5;
             box-sizing: border-box;
             margin: 0;
@@ -57,7 +64,7 @@ export class StickyCard extends LitElement {
             grid-template-columns: 1fr 1fr;
             margin-bottom: -10vh;
         }
-        .casy-image-container {
+        .${unsafeCSS(casyPrefix)}-image-container {
             line-height: 1.5;
             gap: 4rem;
             box-sizing: border-box;
@@ -70,11 +77,11 @@ export class StickyCard extends LitElement {
             display: grid;
             place-items: center;
         }
-        .casy-image {
+        .${unsafeCSS(casyPrefix)}-image {
             border-radius: 8px;
             box-shadow: 0 13px 27px -5px #32325d40, 0 8px 16px -8px #0000004d, 0 -6px 16px -6px #00000008;
         }
-        .casy-sticky-item{
+        .${unsafeCSS(casyPrefix)}-sticky-item{
             line-height: 1.5;
             gap: 4rem;
             box-sizing: border-box;
@@ -91,12 +98,6 @@ export class StickyCard extends LitElement {
     `
     }
 
-    // add constructor with super() to avoid error
-
-    constructor() {
-        super()
-    }
-
     // add flag "useLightDom" to createRenderRoot() for using light dom instead of shadow dom
 
     createRenderRoot() {
@@ -106,26 +107,29 @@ export class StickyCard extends LitElement {
     // add foundation to the window object on first update
 
     firstUpdated() {
-        window.$(document).foundation()
+        window.$(document).foundation()        
     }
 
     // render the component html 
 
     render() {
+        // add unique id to the css classes to avoid conflicts with other styles (CArd-StickY)
+        const casyPrefix = `casy-${this.uniqueId}`
+
         // use the styles from the static get styles() method
         return html`
             <style>
-            ${StickyCard.styles}
+            ${this.getStyles()}
             </style>
-            <div class="casy-section-wrap ${this.imageRight ? 'casy-image-on-right': ''}">
-                <div class="casy-main-container">
-                <div class="casy-image-container">
-                    <img class="casy-image" src="${this.imageSrc}" alt="${this.imageAlt}" />
+            <div class="${casyPrefix}-section-wrap ${this.imageRight ? '${casyPrefix}-image-on-right': ''}">
+                <div class="${casyPrefix}-main-container">
+                <div class="${casyPrefix}-image-container">
+                    <img class="${casyPrefix}-image" src="${this.imageSrc}" alt="${this.imageAlt}" />
                 </div>
                     ${this.textItems.map(
                     (item: { title: String, text: String }) =>
                         html`
-                        <div class="casy-sticky-item">
+                        <div class="${casyPrefix}-sticky-item">
                             <h2>${item.title}</h2>
                             <p>${item.text}</p>
                         </div>
