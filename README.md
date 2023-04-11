@@ -5,7 +5,7 @@ Sticky Card is a web component that creates a responsive and adaptable sticky ca
 ## Features
 
 - Easy integration into existing projects
-- Responsive design
+- Responsive design (todo)
 - Customizable text and image content
 - Support for Light DOM and Shadow DOM
 
