@@ -1,6 +1,6 @@
 {
   "name": "sticky-card",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Pretty card with sticky image as Web Component created with Lit",
   "main": "index.js",
   "author": "Andrej Daiker",

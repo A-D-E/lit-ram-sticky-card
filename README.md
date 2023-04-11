@@ -24,6 +24,12 @@ Import the Sticky Card component and register it as a custom element in your pro
 ```javascript
 import 'sticky-card';
 ```
+or add script to your html markup before ```</body>```
+
+
+```javascript
+<script type="module" crossorigin src="/sticky-card.js"></script>
+```
 
 ## Use the custom sticky-card element in your HTML markup:
 
@@ -31,7 +37,7 @@ import 'sticky-card';
 <sticky-card 
 use-light-dom
 image-right 
-image-src="path/to/image.jpg" 
+image-src="path/to/image" 
 image-alt="Alternative Text" 
 text-items="[
       { "title": "Title 1", "text": "Text 1" },
